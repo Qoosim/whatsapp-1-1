@@ -3,6 +3,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton } from '@mui/material';
 import * as EmailValidator from 'email-validator';
+import { auth } from '../../firebase';
 import {
   Container,
   Header,
@@ -24,7 +25,7 @@ const Sidebar = () => {
   return (
     <Container>
       <Header>
-        <UserAvatar />
+        <UserAvatar onClick={() => auth.signOut() }/>
         <IconContainer>
           <IconButton>
             <ChatIcon />

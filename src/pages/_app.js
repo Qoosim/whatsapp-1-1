@@ -1,12 +1,27 @@
-import '@/styles/globals.css'
-import { useAuthState} from 'react-firebase-hooks/auth';
+import '@/styles/globals.css';
+import * as firebase from "firebase/app";
+import { collection, doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../firebase';
-import Login from './login';
 import Loading from '../components/Loading';
+import Login from './login';
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const [user, loading] = useAuthState(auth);
-  if (true) return <Loading />
+  useEffect(() => {
+    if (user) {
+      setDoc(doc(db, 'users', user.uid), {
+        email: user.email,
+        lastSeen: serverTimestamp(),
+        photoURL: user.photoURL
+      })
+    }
+  }, [user]);
+  
+  if (loading) return <Loading />
   if (!user) return <Login />;
   return <Component {...pageProps} />
 }
+
+export default App;
