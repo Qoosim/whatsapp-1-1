@@ -8,6 +8,7 @@ import {
   Header,
   IconContainer, Search, SearchInput,
   UserAvatar,
+  SidebarButton
 } from '../styles/sidebarStyles';
 
 const Sidebar = () => {
